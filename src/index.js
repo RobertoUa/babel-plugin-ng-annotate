@@ -61,24 +61,6 @@ export default function ({ Plugin, types: t }) {
           }
         }
       },
-
-      Program: {
-        enter: function (node, parent, scope, file) {
-          file.set('hasInject', false);
-        },
-
-        exit: function (node, parent, scope, file) {
-          if (file.get('hasInject') && !scope.hasBinding('Inject')) {
-            node.body.unshift(t.variableDeclaration(
-              'let',
-              [t.variableDeclarator(
-                t.identifier('Inject'),
-                t.callExpression(t.identifier('require'), [t.literal('babel-plugin-ng-annotate/lib/inject')])
-              )]
-            ));
-          }
-        }
-      }
     }
   });
 }
